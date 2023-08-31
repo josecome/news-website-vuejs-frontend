@@ -5,6 +5,6 @@ import Header from './components/Header.vue'
 </script>
 
 <template>
-  <Header title="News Web Page"/>  
+  <Header title="News Web Page" />  
   <Home />
 </template> 
