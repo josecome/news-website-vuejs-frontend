@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
+import Header from './components/Header.vue'
 
 const news = ref([]);
 const breaking_news = ref(0);
@@ -9,6 +10,7 @@ const news_month_year = ref([2000, 20001,2002])
 </script>
 
 <template>
+<Header title="News Web Page"/>  
 <main class="container">
   <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
     <div class="col-md-6 px-0">
