@@ -1,10 +1,39 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import Home from './views/Home.vue'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
+import { ref, onMounted, watch } from 'vue'
 import Header from './components/Header.vue'
+import { computed } from '@vue/reactivity';
+import { useStoreAuth } from '@/stores/auth_store'
+import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+const route = useRoute();
+const router = useRouter()
+const pth = computed(() => route.path)
+const auth_store = useStoreAuth()
+const {  isLoggedin } = storeToRefs(auth_store)
+watch(isLoggedin, () => route.name === 'dashboard' && !isLoggedin.value ? router.push({ name: 'login' }) : router.push({ name: 'dashboard' }) )
+onMounted(() => { 
+  auth_store.LoginUserByToken() 
+  route.name === 'dashboard' && !isLoggedin.value ? router.push({ name: 'login' }) : router.push({ name: 'dashboard' })
+})
+console.log('Route Name: ' + route.name)
 </script>
 
 <template>
-  <Header title="News Web Page" />  
-  <Home />
-</template> 
+  <Header v-show="route.name !== 'dashboard'">
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="45" height="45" /> <span>e-commerce</span>
+    <nav>
+      <RouterLink to="/login">Login</RouterLink>/
+      <RouterLink to="/create_account">Register</RouterLink>
+    </nav>
+  </Header>
+
+  <RouterView />
+</template>
+<style>
+  @import "bootstrap/dist/css/bootstrap.css";
+  @import "bootstrap-icons/font/bootstrap-icons.css";
+</style>
+<style scoped>
+
+</style>
