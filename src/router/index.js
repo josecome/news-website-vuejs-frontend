@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import News from '../views/News.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Login from '../views/Login.vue'
+import Logout from '../views/Logout.vue'
+import Registration from '../views/Registration.vue'
+import { storeToRefs } from 'pinia'
+import { useStoreAuth } from '@/stores/auth_store'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +28,21 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: Logout
+    },
+    {
+      path: '/create_account',
+      name: 'create_account',
+      component: Registration
     },
     {
       path: '/about',
