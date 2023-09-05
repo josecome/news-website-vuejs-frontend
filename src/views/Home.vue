@@ -1,11 +1,38 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
+import axios from 'axios'
 
+const localToken = ref('no_token')
 const news = ref([]);
 const breaking_news = ref(0);
 const featured_section = ref([1, 2])
 const news_month_year = ref([2000, 20001,2002])
+const root_link = ref('http://127.0.0.1:8000')
+const link = ref(`${ root_link.value }/api/`)
+
+const getData = async () => {
+    const v = { "products": "all" }
+    localToken.value = localStorage.getItem('token')
+    const res = await axios.get(link.value, v,
+      {
+        headers: {
+            Accept: 'application/json',
+            //'Content-Type': 'application/json',
+            Authorization: `Bearer ${ localToken.value }`
+        }
+      }
+      
+      );
+      news.value = res.news;
+      breaking_news.value = res.breaking_news;
+      featured_section.value = res.featured_section;
+      news_month_year.value = res.news_month_year
+      console.log(res);
+  }
+  onMounted(
+    getData
+  );
 </script>
 
 <template>
@@ -15,7 +42,7 @@ const news_month_year = ref([2000, 20001,2002])
       <h1 class="display-4 fst-italic">Title</h1>
       <p class="lead my-3">Content...</p>
       <p class="lead mb-0">
-        <RouterLink to="`/news/1 }`" style="color: white;">
+        <RouterLink to="/news/1" style="color: white;">
            Continue reading...
         </RouterLink>
       </p>
