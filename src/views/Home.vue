@@ -92,12 +92,12 @@ const getData = async () => {
 
       <article class="blog-post">
         <div v-for="newss in news" :key="id">
-            <h4 class="blog-post-title mb-1">Title</h4>
-            <span>Content...</span>
+            <h4 class="blog-post-title mb-1">{{ newss.title }}</h4>
+            <span>{{ newss.content.slice(0, 200) + '...' }}</span>
             <RouterLink to="`/news/${ newss.id }`">
                 Continue reading...
             </RouterLink>
-            <p class="blog-post-meta">Mar-2023 by <a href="#">Jose</a></p>
+            <p class="blog-post-meta">{{ newss.news_date }}  by <a href="#">Jose</a></p>
         </div>
       </article>
       <nav class="blog-pagination" aria-label="Pagination">
