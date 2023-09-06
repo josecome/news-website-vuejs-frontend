@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import axios from 'axios'
 
@@ -12,25 +12,25 @@ const root_link = ref('http://127.0.0.1:8000')
 const link = ref(`${ root_link.value }/api/`)
 
 const getData = async () => {
-    const v = { "products": "all" }
+    const v = { "a": "a" }
     localToken.value = localStorage.getItem('token')
     const res = await axios.get(link.value, v,
       {
         headers: {
             Accept: 'application/json',
-            //'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${ localToken.value }`
         }
       }
       
       );
-      news.value = res.news;
-      breaking_news.value = res.breaking_news;
-      featured_section.value = res.featured_section;
-      news_month_year.value = res.news_month_year
-      console.log(res);
+      news.value = res.data.news;
+      breaking_news.value = res.data.breaking_news;
+      featured_section.value = res.data.featured_section;
+      news_month_year.value = res.data.news_month_year
+      console.log(res.data);
   }
-  onMounted(
+  onBeforeMount(
     getData
   );
 </script>
@@ -39,10 +39,10 @@ const getData = async () => {
 <main class="container">
   <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
     <div class="col-md-6 px-0">
-      <h1 class="display-4 fst-italic">Title</h1>
-      <p class="lead my-3">Content...</p>
+      <h1 class="display-4 fst-italic">{{ news[breaking_news].title }}</h1>
+      <p class="lead my-3">{{ news[breaking_news].content.slice(0, 200) + '...' }}</p>
       <p class="lead mb-0">
-        <RouterLink to="/news/1" style="color: white;">
+        <RouterLink to="/news/{{ news[breaking_news].id }}" style="color: white;">
            Continue reading...
         </RouterLink>
       </p>
@@ -54,10 +54,10 @@ const getData = async () => {
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
           <strong class="d-inline-block mb-2 text-primary">World</strong>
-          <h3 class="mb-0">Title</h3>
-          <div class="mb-1 text-muted">Jan-2022</div>
-          <p class="card-text mb-auto">Content...</p>
-          <RouterLink to="`/news/1 }`">
+          <h3 class="mb-0">{{ news[featured_section[0]].title }}</h3>
+          <div class="mb-1 text-muted">{{ news[featured_section[0]].news_date }}</div>
+          <p class="card-text mb-auto">{{ news[featured_section[0]].content.slice(1, 100) }}</p>
+          <RouterLink to="`/news/${ news[featured_section[0]].id }`">
            Continue reading...
           </RouterLink>
         </div>
@@ -70,10 +70,10 @@ const getData = async () => {
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
           <strong class="d-inline-block mb-2 text-success">Most read this week</strong>
-          <h3 class="mb-0">Title</h3>
-          <div class="mb-1 text-muted">Fev-2023</div>
-          <p class="mb-auto">Content...</p>
-          <RouterLink to="`/news/1`">
+          <h3 class="mb-0">{{ news[featured_section[0]].title }}</h3>
+          <div class="mb-1 text-muted">{{ news[featured_section[0]].news_date }}</div>
+          <p class="card-text mb-auto">{{ news[featured_section[0]].content.slice(1, 100) }}</p>
+          <RouterLink to="`/news/${ news[featured_section[0]].id }`">
            Continue reading...
           </RouterLink>
         </div>
