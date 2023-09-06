@@ -42,7 +42,7 @@ const getData = async () => {
       <h1 class="display-4 fst-italic">{{ news[breaking_news].title }}</h1>
       <p class="lead my-3">{{ news[breaking_news].content.slice(0, 200) + '...' }}</p>
       <p class="lead mb-0">
-        <RouterLink to="/news/{{ news[breaking_news].id }}" style="color: white;">
+        <RouterLink :to="`/news/${ news[breaking_news].id }`" style="color: white;">
            Continue reading...
         </RouterLink>
       </p>
@@ -57,7 +57,7 @@ const getData = async () => {
           <h3 class="mb-0">{{ news[featured_section[0]].title }}</h3>
           <div class="mb-1 text-muted">{{ news[featured_section[0]].news_date }}</div>
           <p class="card-text mb-auto">{{ news[featured_section[0]].content.slice(1, 100) }}</p>
-          <RouterLink to="`/news/${ news[featured_section[0]].id }`">
+          <RouterLink :to="`/news/${ news[featured_section[0]].id }`">
            Continue reading...
           </RouterLink>
         </div>
@@ -73,7 +73,7 @@ const getData = async () => {
           <h3 class="mb-0">{{ news[featured_section[0]].title }}</h3>
           <div class="mb-1 text-muted">{{ news[featured_section[0]].news_date }}</div>
           <p class="card-text mb-auto">{{ news[featured_section[0]].content.slice(1, 100) }}</p>
-          <RouterLink to="`/news/${ news[featured_section[0]].id }`">
+          <RouterLink :to="`/news/${ news[featured_section[0]].id }`">
            Continue reading...
           </RouterLink>
         </div>
@@ -94,7 +94,7 @@ const getData = async () => {
         <div v-for="newss in news" :key="id">
             <h4 class="blog-post-title mb-1">{{ newss.title }}</h4>
             <span>{{ newss.content.slice(0, 200) + '...' }}</span>
-            <RouterLink to="`/news/${ newss.id }`">
+            <RouterLink :to="`/news/${ newss.id }`">
                 Continue reading...
             </RouterLink>
             <p class="blog-post-meta">{{ newss.news_date }}  by <a href="#">Jose</a></p>
