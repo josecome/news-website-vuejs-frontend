@@ -1,3 +1,1 @@
-<template>
-    I am autheticated!
-</template>
+<template>I am autheticated!</template>
