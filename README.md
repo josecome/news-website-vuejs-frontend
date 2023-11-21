@@ -3,11 +3,11 @@ This project aim to demostrate how News webpage can be developed using Vuejs as 
 
 The backend link of this project is: news_website_laravel_vuejs in josecome repository
 
-<img src="public/home.jpg">
+<img src="public/home2.jpg">
 
 Display clicked news
 
-<img src="public/news.jpg">
+<img src="public/news2.jpg">
 
 ## To run the project
 
