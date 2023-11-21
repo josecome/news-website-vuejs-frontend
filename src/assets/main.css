@@ -26,3 +26,7 @@ a,
     padding: 0 2rem;
   }
 }
+
+.padding_right {
+  padding-right: 10px;
+}

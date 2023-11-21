@@ -21,11 +21,12 @@ const getData = async () => {
       Authorization: `Bearer ${localToken.value}`
     }
   })
+  console.log(res)
   news.value = res.data.news
   breaking_news.value = res.data.breaking_news
   featured_section.value = res.data.featured_section
   news_month_year.value = res.data.news_month_year
-  console.log(res.data)
+  
 }
 onBeforeMount(getData)
 </script>

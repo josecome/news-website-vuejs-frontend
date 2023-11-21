@@ -11,6 +11,9 @@ const featured_section = ref([1, 2])
 const news_month_year = ref([2000, 20001, 2002])
 const root_link = ref('http://127.0.0.1:8000')
 const link = ref(`${root_link.value}/api/news/${route.params.id}`)
+const like = ref(0)
+const love = ref(0)
+const sad = ref(0)
 
 const getData = async () => {
   const v = { a: 'a' }
@@ -23,6 +26,9 @@ const getData = async () => {
     }
   })
   news.value = res.data.news
+  like.value = res.data.like
+  love.value = res.data.love
+  sad.value = res.data.sad
   console.log(res.data)
 }
 onBeforeMount(getData)
@@ -32,6 +38,18 @@ onBeforeMount(getData)
   <div id="content">
     <h1 class="display-4 fst-italic">{{ news[0].title }}</h1>
     <p class="lead my-3">{{ news[0].content }}</p>
+    <p class="blog-post-meta">{{ news[0].news_date }} by <a href="#">{{ news[0].user.name }}</a></p>
+        <p>
+            <i class="bi bi-hand-thumbs-up padding_right">
+                {{ like }}
+              </i>
+              <i class="bi bi bi-heart padding_right">
+              {{ love }}
+              </i>
+              <i class="bi bi-hand-thumbs-down padding_right">
+              {{ sad }}
+              </i>
+        </p>
   </div>
 </template>
 <style scoped>
