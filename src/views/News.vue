@@ -14,6 +14,7 @@ const link = ref(`${root_link.value}/api/news/${route.params.id}`)
 const like = ref(0)
 const love = ref(0)
 const sad = ref(0)
+const comments = ref([])
 
 const getData = async () => {
   const v = { a: 'a' }
@@ -29,6 +30,7 @@ const getData = async () => {
   like.value = res.data.like
   love.value = res.data.love
   sad.value = res.data.sad
+  comments.value = res.data.comments
   console.log(res.data)
 }
 onBeforeMount(getData)
@@ -50,6 +52,23 @@ onBeforeMount(getData)
               {{ sad }}
               </i>
         </p>
+        <div v-for="comment in comments">
+                        <div class="card w-75 mb-3" style="background-color: #D6DCD7; width: 800px;">
+                            <div class="card-body">
+                                <p class="card-text">{{ comment.comment }}</p>
+                                              <br />
+              <i class="bi bi-hand-thumbs-up" style="padding-right: 10px">
+
+              </i>
+              <i class="bi bi bi-heart" style="padding-right: 10px">
+
+              </i>
+              <i class="bi bi-hand-thumbs-down" style="padding-right: 10px">
+
+              </i>
+                            </div>
+                        </div>
+        </div>
   </div>
 </template>
 <style scoped>
