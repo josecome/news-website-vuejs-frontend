@@ -7,7 +7,7 @@ The backend link of this project is: news_website_laravel_vuejs in josecome repo
 
 Display clicked news
 
-<img src="public/news2.jpg">
+<img src="public/news.jpg">
 
 ## To run the project
 
