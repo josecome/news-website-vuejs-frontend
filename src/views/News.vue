@@ -11,9 +11,9 @@ const featured_section = ref([1, 2])
 const news_month_year = ref([2000, 20001, 2002])
 const root_link = ref('http://127.0.0.1:8000')
 const link = ref(`${root_link.value}/api/news/${route.params.id}`)
-const like = ref(0)
-const love = ref(0)
-const sad = ref(0)
+const news_like = ref(0)
+const news_love = ref(0)
+const news_sad = ref(0)
 const comments = ref([])
 
 const getData = async () => {
@@ -26,11 +26,12 @@ const getData = async () => {
       Authorization: `Bearer ${localToken.value}`
     }
   })
-  news.value = res.data.news
-  like.value = res.data.like
-  love.value = res.data.love
-  sad.value = res.data.sad
-  comments.value = res.data.comments
+  news.value = res.data.data
+  news_like.value = Object.keys(res.data.data.likes.filter(v => v.type === 'like')).length;
+  news_love.value = Object.keys(res.data.data.likes.filter(v => v.type === 'love')).length;
+  news_sad.value = Object.keys(res.data.data.likes.filter(v => v.type === 'sad')).length;
+  comments.value = res.data.data.comments
+  console.log('================')
   console.log(res.data)
 }
 onBeforeMount(getData)
@@ -38,18 +39,18 @@ onBeforeMount(getData)
 <template>
   <AppHead title="News Web Page" />
   <div id="content">
-    <h1 class="display-4 fst-italic">{{ news[0].title }}</h1>
-    <p class="lead my-3">{{ news[0].content }}</p>
-    <p class="blog-post-meta">{{ news[0].news_date }} by <a href="#">{{ news[0].user.name }}</a></p>
+    <h1 class="display-4 fst-italic">{{ news.title }}</h1>
+    <p class="lead my-3">{{ news.content }}</p>
+    <p class="blog-post-meta">{{ news.news_date }} by <a href="#">{{ news.user }}</a></p>
         <p>
             <i class="bi bi-hand-thumbs-up padding_right">
-                {{ like }}
+                {{ news_like }}
               </i>
               <i class="bi bi bi-heart padding_right">
-              {{ love }}
+              {{ news_love }}
               </i>
               <i class="bi bi-hand-thumbs-down padding_right">
-              {{ sad }}
+              {{ news_sad }}
               </i>
         </p>
         <div v-for="comment in comments">
@@ -58,13 +59,13 @@ onBeforeMount(getData)
                                 <p class="card-text">{{ comment.comment }}</p>
                                               <br />
               <i class="bi bi-hand-thumbs-up" style="padding-right: 10px">
-
+                {{ Object.keys(comment.likes.filter((like) => like.type === 'like')).length }}
               </i>
               <i class="bi bi bi-heart" style="padding-right: 10px">
-
+                {{ Object.keys(comment.likes.filter((like) => like.type === 'love')).length }}
               </i>
               <i class="bi bi-hand-thumbs-down" style="padding-right: 10px">
-
+                {{ Object.keys(comment.likes.filter((like) => like.type === 'sad')).length }}
               </i>
                             </div>
                         </div>
